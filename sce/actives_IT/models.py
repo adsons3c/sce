@@ -8,7 +8,17 @@ class Setor(models.Model):
     def __str__(self):
         return self.nome
 
+class Modelos_PC(models.Model):
+    marca = models.CharField(max_length=10)
+    modelo = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.modelo
+
+status_choices = (
+    ('Ativo', 'Ativo'),
+    ('Inativo', 'Inativo'),
+)
 class Computadores(models.Model):
 
     memoria_choices = (
@@ -28,7 +38,7 @@ class Computadores(models.Model):
     ('2000GB', '2000GB'),
     )
 
-    modelo = models.CharField(max_length=100)
+
     tombamento = models.IntegerField()
     numero_serie = models.CharField(max_length=100)
     sistema_oper = models.CharField(max_length=50)
@@ -41,7 +51,9 @@ class Computadores(models.Model):
     data_ultima_manutencao = models.DateField(blank=True)
     data_proxima_manutencao = models.DateField(blank=True)
     descricao_manutencao = models.TextField()
+    status = models.CharField(max_length=7, choices=status_choices, default='Ativo')
     setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
+    modelo = models.ForeignKey(Modelos_PC, on_delete=models.CASCADE)
 
 
     def __str__(self):
@@ -59,6 +71,7 @@ class Roteador_Wifi(models.Model):
     data_proxima_manutencao = models.DateField()
     descricao_manutencao = models.TextField()
     setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
+    status = models.CharField(max_length=7, choices=status_choices, default='Ativo')
 
     def __str__(self):
         return self.modelo
@@ -74,6 +87,7 @@ class Impressora(models.Model):
     data_proxima_manutencao = models.DateField()
     descricao_manutencao = models.TextField()
     setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
+    status = models.CharField(max_length=7, choices=status_choices)
 
     def __str__(self):
         return self.modelo
@@ -88,6 +102,7 @@ class Switch(models.Model):
     data_proxima_manutencao = models.DateField()
     descricao_manutencao = models.TextField()
     setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
+    status = models.CharField(max_length=7, choices=status_choices)
 
     def __str__(self):
         return self.modelo
