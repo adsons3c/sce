@@ -1,13 +1,13 @@
 from django.db import models
 
-
+'''Modelo de Setor'''
 class Setor(models.Model):
     nome = models.CharField(max_length=200)
     sigla = models.CharField(max_length=30)
 
     def __str__(self):
         return self.nome
-
+'''Modelo de PC'''
 class Modelos_PC(models.Model):
     marca = models.CharField(max_length=10)
     modelo = models.CharField(max_length=100)
@@ -20,6 +20,8 @@ status_choices = (
     ('Inativo', 'Inativo'),
     ('Manutenção', 'Manutenção')
 )
+
+'''Modelo de Computadores'''
 class Computadores(models.Model):
 
     memoria_choices = (
@@ -60,7 +62,7 @@ class Computadores(models.Model):
     def __str__(self):
         return self.modelo
 
-
+'''Modelo do Roteador Wifi'''
 class Roteador_Wifi(models.Model):
     modelo = models.CharField(max_length=100)
     tombamento = models.IntegerField()
@@ -77,7 +79,7 @@ class Roteador_Wifi(models.Model):
     def __str__(self):
         return self.modelo
 
-
+'''Modelo de Impressora'''
 class Impressora(models.Model):
     modelo = models.CharField(max_length=100)
     numero_serie = models.CharField(max_length=100)
@@ -88,12 +90,12 @@ class Impressora(models.Model):
     data_proxima_manutencao = models.DateField()
     descricao_manutencao = models.TextField()
     setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
-    status = models.CharField(max_length=7, choices=status_choices)
+    status = models.CharField(max_length=7, choices=status_choices, default='Ativo')
 
     def __str__(self):
         return self.modelo
 
-
+'''Modelo do Switch'''
 class Switch(models.Model):
     modelo = models.CharField(max_length=100)
     numero_serie = models.CharField(max_length=100)
@@ -103,7 +105,7 @@ class Switch(models.Model):
     data_proxima_manutencao = models.DateField()
     descricao_manutencao = models.TextField()
     setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
-    status = models.CharField(max_length=7, choices=status_choices)
+    status = models.CharField(max_length=7, choices=status_choices, default='Ativo')
 
     def __str__(self):
         return self.modelo
