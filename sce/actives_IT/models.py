@@ -18,6 +18,7 @@ class Modelos_PC(models.Model):
 status_choices = (
     ('Ativo', 'Ativo'),
     ('Inativo', 'Inativo'),
+    ('Manutenção', 'Manutenção')
 )
 class Computadores(models.Model):
 
