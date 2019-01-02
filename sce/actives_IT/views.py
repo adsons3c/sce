@@ -1,8 +1,10 @@
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Setor, Modelos_PC, Computadores, Roteador_Wifi, Impressora
 from .models import Switch
+from django.contrib import messages
+from django.http import HttpResponse
 
 
 class CreatePC(CreateView):
@@ -29,6 +31,13 @@ class Create_Setor(CreateView):
     model = Setor
     template_name = 'actives_IT/setor_form.html'
     fields = ['nome', 'sigla']
+    def form_valid(self, form):
+        model = form.save(commit=False)
+        if not Setor.objects.filter(sigla=model.sigla).exists():
+            model.save()
+            return HttpResponse ("OK")
+        else:
+            return HttpResponse("Item já Cadastrado")
 
 
 class Create_Impressora(CreateView):
