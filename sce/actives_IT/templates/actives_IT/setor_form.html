@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+  <h1 class="mt-2">Adicionar um Novo Setor</h1>
   <form method="post">
     {% csrf_token %}
     {{ form|crispy }}

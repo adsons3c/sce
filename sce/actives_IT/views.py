@@ -31,18 +31,6 @@ class Create_Setor(CreateView):
     model = Setor
     template_name = 'actives_IT/setor_form.html'
     fields = ['nome', 'sigla']
-    def form_valid(self, form):
-        model = form.save(commit=False)
-        object_itens= list(Setor.objects.values('nome', 'sigla'))
-        lista = Setor.objects.all()
-        print(lista)
-        print(object_itens)
-        if not Setor.objects.filter(sigla=model.sigla).exists() and not Setor.objects.filter(nome=model.nome).exists():
-            model.save()
-            return HttpResponse ("OK")
-        else:
-            return HttpResponse("Item já Cadastrado")
-
 
 class Create_Impressora(CreateView):
     model = Impressora
