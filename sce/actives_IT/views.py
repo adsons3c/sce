@@ -31,6 +31,7 @@ class Create_Setor(CreateView):
     model = Setor
     template_name = 'actives_IT/setor_form.html'
     fields = ['nome', 'sigla']
+    success_url = '/adicionarsetor/'
 
 class Create_Impressora(CreateView):
     model = Impressora
