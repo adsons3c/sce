@@ -14,18 +14,22 @@ class CreatePC(CreateView):
               'mac', 'processador', 'memoria', 'hd', 'data_ultima_manutencao',
               'data_proxima_manutencao', 'descricao_manutencao', 'status', 'setor',
               'modelo']
+    success_url = '/adicionarpc/'
 
 class Create_Modelo_PC(CreateView):
     model = Modelos_PC
     template_name = 'actives_IT/modelo_pc_form.html'
     fields = ['marca', 'modelo']
+    success_url = '/adicionarmodelopc/'
 
 class Create_Rotetador_Wifi(CreateView):
     model = Roteador_Wifi
     template_name = 'actives_IT/roteador_wifi_form.html'
     fields = ['modelo', 'tombamento', 'numero_serie', 'ip', 'mac', 'senha_admin',
               'data_ultima_manutencao', 'data_proxima_manutencao', 'descricao_manutencao',
-              'setor', 'status']
+              'setor', 'status']# -*- coding: utf-8 -*-
+              
+    success_url = '/adicionarroteadorwifi/'
 
 class Create_Setor(CreateView):
     model = Setor
@@ -38,9 +42,11 @@ class Create_Impressora(CreateView):
     template_name = 'actives_IT/impressora_form.html'
     fields = ['modelo', 'numero_serie', 'ip', 'locada', 'empresa_locadora', 'data_ultima_manutencao',
               'data_proxima_manutencao', 'descricao_manutencao', 'setor', 'status']
+    success_url = '/adicionarimpressora/'
 
 class Create_Switch(CreateView):
     model = Switch
     template_name = 'actives_IT/switch_form.html'
     fields = ['modelo', 'numero_serie', 'ip', 'senha_admin', 'data_ultima_manutencao',
               'data_proxima_manutencao', 'descricao_manutencao', 'setor', 'status']
+    success_url = '/adicionarswitch/'

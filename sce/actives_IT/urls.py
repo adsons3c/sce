@@ -8,4 +8,5 @@ urlpatterns = [
     path('adicionarroteadorwifi/', Create_Rotetador_Wifi.as_view(), name='adicionarroteadorwifi'),
     path('adicionarsetor/', Create_Setor.as_view(), name='adicionarsetor'),
     path('adicionarimpressora/', Create_Impressora.as_view(), name='adicionarimpressora'),
+    path('adicionarswitch/', Create_Switch.as_view(), name='adicionarswitch'),
 ]
