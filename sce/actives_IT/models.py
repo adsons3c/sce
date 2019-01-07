@@ -120,3 +120,9 @@ class Switch(models.Model):
 
     def __str__(self):
         return self.modelo
+
+'''Range de IPs '''
+class Range_Ips(models.Model):
+    setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
+    range_inicial = models.GenericIPAddressField(unique=True)
+    range_final = models.GenericIPAddressField(unique=True)

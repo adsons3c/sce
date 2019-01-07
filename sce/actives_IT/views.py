@@ -1,11 +1,14 @@
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
+from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 from .models import Setor, Modelos_PC, Computadores, Roteador_Wifi, Impressora
 from .models import Switch
 from django.contrib import messages
 from django.http import HttpResponse
 
+class Home(TemplateView):
+    template_name = "actives_IT/home.html"
 
 class CreatePC(CreateView):
     model = Computadores
@@ -28,7 +31,7 @@ class Create_Rotetador_Wifi(CreateView):
     fields = ['modelo', 'tombamento', 'numero_serie', 'ip', 'mac', 'senha_admin',
               'data_ultima_manutencao', 'data_proxima_manutencao', 'descricao_manutencao',
               'setor', 'status']# -*- coding: utf-8 -*-
-              
+
     success_url = '/adicionarroteadorwifi/'
 
 class Create_Setor(CreateView):
