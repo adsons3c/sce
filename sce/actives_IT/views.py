@@ -3,9 +3,10 @@ from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 from .models import Setor, Modelos_PC, Computadores, Roteador_Wifi, Impressora
-from .models import Switch
+from .models import Switch, Range_Ips_Setor
 from django.contrib import messages
 from django.http import HttpResponse
+import ipaddress
 
 class Home(TemplateView):
     template_name = "actives_IT/home.html"
@@ -13,10 +14,10 @@ class Home(TemplateView):
 class CreatePC(CreateView):
     model = Computadores
     template_name = 'actives_IT/computadores_form.html'
-    fields = ['tombamento', 'numero_serie', 'sistema_oper', 'licenca_so', 'ip',
+    fields = ['setor', 'modelo','tombamento', 'numero_serie', 'sistema_oper', 'licenca_so', 'ip',
               'mac', 'processador', 'memoria', 'hd', 'data_ultima_manutencao',
-              'data_proxima_manutencao', 'descricao_manutencao', 'status', 'setor',
-              'modelo']
+              'data_proxima_manutencao', 'descricao_manutencao', 'status',]
+
     success_url = '/adicionarpc/'
 
 class Create_Modelo_PC(CreateView):
@@ -37,7 +38,7 @@ class Create_Rotetador_Wifi(CreateView):
 class Create_Setor(CreateView):
     model = Setor
     template_name = 'actives_IT/setor_form.html'
-    fields = ['nome', 'sigla']
+    fields = ['nome', 'sigla', 'range_inicial', 'range_final']
     success_url = '/adicionarsetor/'
 
 class Create_Impressora(CreateView):
@@ -53,3 +54,8 @@ class Create_Switch(CreateView):
     fields = ['modelo', 'numero_serie', 'ip', 'senha_admin', 'data_ultima_manutencao',
               'data_proxima_manutencao', 'descricao_manutencao', 'setor', 'status']
     success_url = '/adicionarswitch/'
+
+class Create_Range_Setor(CreateView):
+    model = Range_Ips_Setor
+    template_name = 'actives_IT/Range_Ips_Setor_form.html'
+    fields = ['setor', 'range_inicial', 'range_final']

@@ -10,4 +10,5 @@ urlpatterns = [
     path('adicionarsetor/', Create_Setor.as_view(), name='adicionarsetor'),
     path('adicionarimpressora/', Create_Impressora.as_view(), name='adicionarimpressora'),
     path('adicionarswitch/', Create_Switch.as_view(), name='adicionarswitch'),
+    path('adicionarrangeipssetor/', Create_Range_Setor.as_view(), name='adicionarrangeipssetor'),
 ]

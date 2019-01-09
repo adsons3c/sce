@@ -4,6 +4,8 @@ from django.db import models
 class Setor(models.Model):
     nome = models.CharField(max_length=200, unique=True)
     sigla = models.CharField(max_length=30, unique=True)
+    range_inicial = models.GenericIPAddressField(unique=True)
+    range_final = models.GenericIPAddressField(unique=True)
 
     def save(self, force_insert=False, force_update=False):
         self.nome = self.nome.upper()
@@ -70,6 +72,7 @@ class Computadores(models.Model):
     modelo = models.ForeignKey(Modelos_PC, on_delete=models.CASCADE)
 
 
+
     def __str__(self):
         return self.modelo
 
@@ -122,7 +125,8 @@ class Switch(models.Model):
         return self.modelo
 
 '''Range de IPs '''
-class Range_Ips(models.Model):
+class Range_Ips_Setor(models.Model):
     setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
     range_inicial = models.GenericIPAddressField(unique=True)
     range_final = models.GenericIPAddressField(unique=True)
+    ips_ativos = models.BooleanField(null=True)
