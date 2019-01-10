@@ -24,6 +24,13 @@ class Create_Modelo_PC(CreateView):
     model = Modelos_PC
     template_name = 'actives_IT/modelo_pc_form.html'
     fields = ['marca', 'modelo']
+    
+    def form_valid(self, form):
+        model = form.save(commit=False)
+        if not Modelo.objects.filter(campo=variavel).exists():
+            model.save()
+        else:
+            messages.error(request, 'Já existe!')
     success_url = '/adicionarmodelopc/'
 
 class Create_Rotetador_Wifi(CreateView):

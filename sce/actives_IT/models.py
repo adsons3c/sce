@@ -4,8 +4,6 @@ from django.db import models
 class Setor(models.Model):
     nome = models.CharField(max_length=200, unique=True)
     sigla = models.CharField(max_length=30, unique=True)
-    range_inicial = models.GenericIPAddressField(unique=True)
-    range_final = models.GenericIPAddressField(unique=True)
 
     def save(self, force_insert=False, force_update=False):
         self.nome = self.nome.upper()
@@ -53,17 +51,25 @@ class Computadores(models.Model):
     ('1000GB', '1000GB'),
     ('2000GB', '2000GB'),
     )
+    so_choices = (
+    ('Windows XP Profissional', 'Windows XP Profissional'),
+    ('Windows 7 Home', 'Windows 7 Home'),
+    ('Windows 7 Profissional', 'Windows 7 Profissional'),
+    ('Windows 7 Ultimate', 'Windows 7 Ultimate'),
+    ('Windows 8', 'Windows 8'),
+    ('Windows 10 Profissional', 'Windows 10 Profissional'),
+    )
 
 
     tombamento = models.IntegerField(unique=True)
     numero_serie = models.CharField(max_length=100, unique=True)
-    sistema_oper = models.CharField(max_length=50)
+    sistema_oper = models.CharField(max_length=50, choices=so_choices, default='Windows 10 Profissional')
     licenca_so = models.CharField(max_length=100, unique=True)
     ip = models.GenericIPAddressField(unique=True)
     mac = models.CharField(max_length=50, unique=True)
     processador = models.CharField(max_length=30)
     memoria = models.CharField(max_length=4, choices=memoria_choices, default='4GB')
-    hd = models.CharField(max_length=10, choices=hd_choices)
+    hd = models.CharField(max_length=10, choices=hd_choices, default='500GB')
     data_ultima_manutencao = models.DateField(blank=True, null=True)
     data_proxima_manutencao = models.DateField(blank=True, null=True)
     descricao_manutencao = models.TextField(blank=True, null=True)
@@ -90,6 +96,11 @@ class Roteador_Wifi(models.Model):
     setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
     status = models.CharField(max_length=7, choices=status_choices, default='Ativo')
 
+    def save(self, force_insert=False, force_update=False):
+        self.modelo = self.modelo.upper()
+        self.numero_serie = self.numero_serie.upper()
+        super(Roteador_Wifi, self).save(force_insert, force_update)
+
     def __str__(self):
         return self.modelo
 
@@ -106,6 +117,11 @@ class Impressora(models.Model):
     setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
     status = models.CharField(max_length=7, choices=status_choices, default='Ativo')
 
+    def save(self, force_insert=False, force_update=False):
+        self.modelo = self.modelo.upper()
+        self.numero_serie = self.numero_serie.upper()
+        super(Impressora, self).save(force_insert, force_update)
+
     def __str__(self):
         return self.modelo
 
@@ -120,6 +136,12 @@ class Switch(models.Model):
     descricao_manutencao = models.TextField(blank=True, null=True)
     setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
     status = models.CharField(max_length=7, choices=status_choices, default='Ativo')
+
+    def save(self, force_insert=False, force_update=False):
+        self.modelo = self.modelo.upper()
+        self.numero_serie = self.numero_serie.upper()
+        super(Switch, self).save(force_insert, force_update)
+
 
     def __str__(self):
         return self.modelo
