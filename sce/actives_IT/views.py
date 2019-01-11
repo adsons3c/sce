@@ -6,7 +6,8 @@ from .models import Setor, Modelos_PC, Computadores, Roteador_Wifi, Impressora
 from .models import Switch, Range_Ips_Setor
 from django.contrib import messages
 from django.http import HttpResponse
-import ipaddress
+from django.db import IntegrityError
+from django.shortcuts import render_to_response
 
 class Home(TemplateView):
     template_name = "actives_IT/home.html"
@@ -24,21 +25,18 @@ class Create_Modelo_PC(CreateView):
     model = Modelos_PC
     template_name = 'actives_IT/modelo_pc_form.html'
     fields = ['marca', 'modelo']
-    
-    def form_valid(self, form):
-        model = form.save(commit=False)
-        if not Modelo.objects.filter(campo=variavel).exists():
-            model.save()
-        else:
-            messages.error(request, 'Já existe!')
+
     success_url = '/adicionarmodelopc/'
+
+
+
 
 class Create_Rotetador_Wifi(CreateView):
     model = Roteador_Wifi
     template_name = 'actives_IT/roteador_wifi_form.html'
     fields = ['modelo', 'tombamento', 'numero_serie', 'ip', 'mac', 'senha_admin',
               'data_ultima_manutencao', 'data_proxima_manutencao', 'descricao_manutencao',
-              'setor', 'status']# -*- coding: utf-8 -*-
+              'setor', 'status']
 
     success_url = '/adicionarroteadorwifi/'
 
