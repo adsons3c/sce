@@ -5,9 +5,9 @@ from django.shortcuts import render, redirect
 from .models import Setor, Modelos_PC, Computadores, Roteador_Wifi, Impressora
 from .models import Switch, Range_Ips_Setor
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.db import IntegrityError
-from django.shortcuts import render_to_response
+
 
 class Home(TemplateView):
     template_name = "actives_IT/home.html"
@@ -26,6 +26,12 @@ class Create_Modelo_PC(CreateView):
     template_name = 'actives_IT/modelo_pc_form.html'
     fields = ['marca', 'modelo']
 
+    def form_valid(self,form):
+        try:
+            form.save()
+            return HttpResponseRedirect('/home/')
+        except IntegrityError:
+            return HttpResponse("Duplicado")
     success_url = '/adicionarmodelopc/'
 
 
