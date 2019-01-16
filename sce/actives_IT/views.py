@@ -7,6 +7,7 @@ from .models import Switch, Range_Ips_Setor
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db import IntegrityError
+from .funtions import form_valid
 
 
 class Home(TemplateView):
@@ -19,6 +20,7 @@ class CreatePC(CreateView):
               'mac', 'processador', 'memoria', 'hd', 'data_ultima_manutencao',
               'data_proxima_manutencao', 'descricao_manutencao', 'status',]
 
+
     success_url = '/adicionarpc/'
 
 class Create_Modelo_PC(CreateView):
@@ -26,15 +28,14 @@ class Create_Modelo_PC(CreateView):
     template_name = 'actives_IT/modelo_pc_form.html'
     fields = ['marca', 'modelo']
 
+
     def form_valid(self,form):
         try:
             form.save()
-            return HttpResponseRedirect('/home/')
+            return render(self.request, 'actives_IT/home.html')
         except IntegrityError:
             return HttpResponse("Duplicado")
     success_url = '/adicionarmodelopc/'
-
-
 
 
 class Create_Rotetador_Wifi(CreateView):
