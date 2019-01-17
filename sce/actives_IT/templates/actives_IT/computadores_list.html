@@ -1,0 +1,9 @@
+<h1>Lista de Computadores</h1>
+<form>
+    {{ form }}
+    <button type ='submit'>search</button>
+</form>
+
+{% for computadores in object_list %}
+    <p><a >{{ computadores }}</a></p>
+{% endfor %}

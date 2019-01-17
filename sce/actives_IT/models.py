@@ -80,7 +80,7 @@ class Computadores(models.Model):
 
 
     def __str__(self):
-        return self.modelo
+        return str(self.tombamento)
 
 '''Modelo do Roteador Wifi'''
 class Roteador_Wifi(models.Model):
@@ -107,6 +107,7 @@ class Roteador_Wifi(models.Model):
 '''Modelo de Impressora'''
 class Impressora(models.Model):
     modelo = models.CharField(max_length=100)
+    tombamento = models.IntegerField(unique=True)
     numero_serie = models.CharField(max_length=100, unique=True)
     ip = models.GenericIPAddressField(unique=True)
     locada = models.BooleanField()

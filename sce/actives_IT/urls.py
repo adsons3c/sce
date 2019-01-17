@@ -10,5 +10,11 @@ urlpatterns = [
     path('adicionarsetor/', Create_Setor.as_view(), name='adicionarsetor'),
     path('adicionarimpressora/', Create_Impressora.as_view(), name='adicionarimpressora'),
     path('adicionarswitch/', Create_Switch.as_view(), name='adicionarswitch'),
-    path('adicionarrangeipssetor/', Create_Range_Setor.as_view(), name='adicionarrangeipssetor'),
+    path('listapcs', PC_List.as_view(), name='listapcs'),
+    path('listamodelepc', Modelos_PC_List.as_view(), name='listamodelepc'),
+    path('listaroteadorwifi', Roteador_Wifi_List.as_view(), name='listaroteadorwifi'),
+    path('listasetor', Setor_List.as_view(), name='listasetor'),
+    path('listaimpressora', Impressora_List.as_view(), name='listaimpressora'),
+    path('listaswitch', Switch_List.as_view(), name='listaswitch')
+    # path('adicionarrangeipssetor/', Create_Range_Setor.as_view(), name='adicionarrangeipssetor'),
 ]

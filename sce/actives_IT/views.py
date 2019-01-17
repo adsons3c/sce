@@ -20,8 +20,13 @@ class CreatePC(CreateView):
               'mac', 'processador', 'memoria', 'hd', 'data_ultima_manutencao',
               'data_proxima_manutencao', 'descricao_manutencao', 'status',]
 
+    def form_valid(self,form):
+        try:
+            form.save()
+            return render(self.request, 'actives_IT/home.html')
+        except IntegrityError:
+            return HttpResponse("Duplicado")
 
-    success_url = '/adicionarpc/'
 
 class Create_Modelo_PC(CreateView):
     model = Modelos_PC
@@ -35,7 +40,6 @@ class Create_Modelo_PC(CreateView):
             return render(self.request, 'actives_IT/home.html')
         except IntegrityError:
             return HttpResponse("Duplicado")
-    success_url = '/adicionarmodelopc/'
 
 
 class Create_Rotetador_Wifi(CreateView):
@@ -45,29 +49,99 @@ class Create_Rotetador_Wifi(CreateView):
               'data_ultima_manutencao', 'data_proxima_manutencao', 'descricao_manutencao',
               'setor', 'status']
 
-    success_url = '/adicionarroteadorwifi/'
+    def form_valid(self,form):
+        try:
+            form.save()
+            return render(self.request, 'actives_IT/home.html')
+        except IntegrityError:
+            return HttpResponse("Duplicado")
+
 
 class Create_Setor(CreateView):
     model = Setor
     template_name = 'actives_IT/setor_form.html'
     fields = ['nome', 'sigla', 'range_inicial', 'range_final']
-    success_url = '/adicionarsetor/'
+
+    def form_valid(self,form):
+        try:
+            form.save()
+            return render(self.request, 'actives_IT/home.html')
+        except IntegrityError:
+            return HttpResponse("Duplicado")
+
 
 class Create_Impressora(CreateView):
     model = Impressora
     template_name = 'actives_IT/impressora_form.html'
-    fields = ['modelo', 'numero_serie', 'ip', 'locada', 'empresa_locadora', 'data_ultima_manutencao',
+    fields = ['modelo', 'tombamento','numero_serie', 'ip', 'locada', 'empresa_locadora', 'data_ultima_manutencao',
               'data_proxima_manutencao', 'descricao_manutencao', 'setor', 'status']
-    success_url = '/adicionarimpressora/'
+
+    def form_valid(self,form):
+        try:
+            form.save()
+            return render(self.request, 'actives_IT/home.html')
+        except IntegrityError:
+            return HttpResponse("Duplicado")
 
 class Create_Switch(CreateView):
     model = Switch
     template_name = 'actives_IT/switch_form.html'
     fields = ['modelo', 'numero_serie', 'ip', 'senha_admin', 'data_ultima_manutencao',
               'data_proxima_manutencao', 'descricao_manutencao', 'setor', 'status']
-    success_url = '/adicionarswitch/'
 
-class Create_Range_Setor(CreateView):
-    model = Range_Ips_Setor
-    template_name = 'actives_IT/Range_Ips_Setor_form.html'
-    fields = ['setor', 'range_inicial', 'range_final']
+    def form_valid(self,form):
+        try:
+            form.save()
+            return render(self.request, 'actives_IT/home.html')
+        except IntegrityError:
+            return HttpResponse("Duplicado")
+
+
+class PC_List(ListView):
+    model = Computadores
+    template_name = 'actives_IT/computadores_list.html'
+    paginate_by = 20
+
+
+class Modelos_PC_List(ListView):
+    model = Modelos_PC
+    template_name = 'actives_IT/modelos_pc_list.html'
+    paginate_by = 20
+
+
+class Roteador_Wifi_List(ListView):
+    model = Roteador_Wifi
+    template_name = 'actives_IT/roteador_wifi_list.html'
+    paginate_by = 20
+
+
+class Setor_List(ListView):
+    model = Setor
+    template_name = 'actives_IT/setor_list.html'
+    paginate_by = 20
+
+
+class Impressora_List(ListView):
+    model = Impressora
+    template_name = 'actives_IT/impressora_list.html'
+    paginate_by = 20
+
+
+class Switch_List(ListView):
+    model = Switch
+    template_name = 'actives_IT/switch_list.html'
+    paginate_by = 20
+
+
+
+# class Create_Range_Setor(CreateView):
+#     model = Range_Ips_Setor
+#     template_name = 'actives_IT/Range_Ips_Setor_form.html'
+#     fields = ['setor', 'range_inicial', 'range_final']
+#
+#     def form_valid(self,form):
+#         try:
+#             form.save()
+#             return render(self.request, 'actives_IT/home.html')
+#         except IntegrityError:
+#             return HttpResponse("Duplicado")
