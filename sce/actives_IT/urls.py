@@ -15,6 +15,12 @@ urlpatterns = [
     path('listaroteadorwifi', Roteador_Wifi_List.as_view(), name='listaroteadorwifi'),
     path('listasetor', Setor_List.as_view(), name='listasetor'),
     path('listaimpressora', Impressora_List.as_view(), name='listaimpressora'),
-    path('listaswitch', Switch_List.as_view(), name='listaswitch')
-    # path('adicionarrangeipssetor/', Create_Range_Setor.as_view(), name='adicionarrangeipssetor'),
+    path('listaswitch', Switch_List.as_view(), name='listaswitch'),
+    path('detalhespc/<int:pk>/', PC_Detail.as_view(), name='detalhespc'),
+    path('detalhesmodelopc/<int:pk>/', Modelo_PC_Detail.as_view(), name='detalhesmodelopc'),
+    path('detalhesroteadorwifi/<int:pk>/', Roteador_Wifi_Detail.as_view(), name='detalhesroteadorwifi'),
+    path('detalhessetor/<int:pk>/', Setor_Detail.as_view(), name='detalhessetor'),
+    path('detalhesimpressora/<int:pk>/', Impressora_Detail.as_view(), name='detalhesimpressora'),
+    path('detalhesswitch/<int:pk>/', Switch_Detail.as_view(), name='detalhesswitch'),
+    path('adicionarrangeipssetor/', Create_Range_Setor.as_view(), name='adicionarrangeipssetor'),
 ]

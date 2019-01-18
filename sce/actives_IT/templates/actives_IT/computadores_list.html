@@ -5,5 +5,5 @@
 </form>
 
 {% for computadores in object_list %}
-    <p><a >{{ computadores }}</a></p>
+    <p><a href="{% url 'detalhespc' computadores.pk %}">{{ computadores }}</a></p>
 {% endfor %}

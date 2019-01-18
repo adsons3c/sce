@@ -150,6 +150,6 @@ class Switch(models.Model):
 '''Range de IPs '''
 class Range_Ips_Setor(models.Model):
     setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
-    range_inicial = models.GenericIPAddressField(unique=True)
-    range_final = models.GenericIPAddressField(unique=True)
-    ips_ativos = models.BooleanField(null=True)
+    ip_inicial = models.GenericIPAddressField(unique=True)
+    ip_final = models.GenericIPAddressField(unique=True)
+    ips = models.BooleanField(null=True)

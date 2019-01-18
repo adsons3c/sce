@@ -1,11 +1,12 @@
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
+from django.views.generic.detail import DetailView
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 from .models import Setor, Modelos_PC, Computadores, Roteador_Wifi, Impressora
 from .models import Switch, Range_Ips_Setor
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.db import IntegrityError
 from .funtions import form_valid
 
@@ -97,6 +98,8 @@ class Create_Switch(CreateView):
             return HttpResponse("Duplicado")
 
 
+'''Definição das class ListView'''
+
 class PC_List(ListView):
     model = Computadores
     template_name = 'actives_IT/computadores_list.html'
@@ -133,15 +136,35 @@ class Switch_List(ListView):
     paginate_by = 20
 
 
+'''Definição das Class DetailView'''
 
-# class Create_Range_Setor(CreateView):
-#     model = Range_Ips_Setor
-#     template_name = 'actives_IT/Range_Ips_Setor_form.html'
-#     fields = ['setor', 'range_inicial', 'range_final']
-#
-#     def form_valid(self,form):
-#         try:
-#             form.save()
-#             return render(self.request, 'actives_IT/home.html')
-#         except IntegrityError:
-#             return HttpResponse("Duplicado")
+class PC_Detail(DetailView):
+    model = Computadores
+
+class Modelo_PC_Detail(DetailView):
+    model = Modelos_PC
+
+class Roteador_Wifi_Detail(DetailView):
+    model = Roteador_Wifi
+
+class Setor_Detail(DetailView):
+    model = Setor
+
+class Impressora_Detail(DetailView):
+    model = Impressora
+
+class Switch_Detail(DetailView):
+    model = Switch
+
+
+class Create_Range_Setor(CreateView):
+    model = Range_Ips_Setor
+    template_name = 'actives_IT/Range_Ips_Setor_form.html'
+    fields = ['setor', 'range_inicial', 'range_final']
+
+    def form_valid(self,form):
+        try:
+            form.save()
+            return render(self.request, 'actives_IT/home.html')
+        except IntegrityError:
+            return HttpResponse("Duplicado")
