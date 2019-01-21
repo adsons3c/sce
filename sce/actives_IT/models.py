@@ -11,7 +11,7 @@ class Setor(models.Model):
         super(Setor, self).save(force_insert, force_update)
 
     def __str__(self):
-        return self.nome
+        return self.sigla
 
 '''Modelo de PC'''
 class Modelos_PC(models.Model):

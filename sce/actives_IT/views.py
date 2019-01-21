@@ -2,13 +2,13 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic import TemplateView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Setor, Modelos_PC, Computadores, Roteador_Wifi, Impressora
 from .models import Switch, Range_Ips_Setor
 from django.contrib import messages
 from django.http import HttpResponse
 from django.db import IntegrityError
-from .funtions import form_valid
+from .forms import GetSetorForm
 
 
 class Home(TemplateView):
@@ -160,7 +160,7 @@ class Switch_Detail(DetailView):
 class Create_Range_Setor(CreateView):
     model = Range_Ips_Setor
     template_name = 'actives_IT/Range_Ips_Setor_form.html'
-    fields = ['setor', 'range_inicial', 'range_final']
+    fields = ['setor', 'ip_inicial', 'ip_final']
 
     def form_valid(self,form):
         try:
@@ -168,3 +168,22 @@ class Create_Range_Setor(CreateView):
             return render(self.request, 'actives_IT/home.html')
         except IntegrityError:
             return HttpResponse("Duplicado")
+
+
+
+def listadeequipamentossetor(request):
+
+    form = GetSetorForm()
+    return render(request, 'actives_IT/form.html', {'form', form})
+
+
+
+# def listaequip(request, pk):
+#
+#     setor = get_object_or_404(Setor, pk=pk)
+#
+#     C = Computadores.objects.filter(setor = setor)
+#     I = Impressora.objects.filter(setor = setor)
+#     RW = Roteador_Wifi.objects.filter(setor = setor)
+#
+#     return render (request, 'actives_IT/listasetores.html', locals() )

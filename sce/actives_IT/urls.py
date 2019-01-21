@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-
+from . import views
 
 urlpatterns = [
     path('home/', Home.as_view(), name='home'),
@@ -23,4 +23,5 @@ urlpatterns = [
     path('detalhesimpressora/<int:pk>/', Impressora_Detail.as_view(), name='detalhesimpressora'),
     path('detalhesswitch/<int:pk>/', Switch_Detail.as_view(), name='detalhesswitch'),
     path('adicionarrangeipssetor/', Create_Range_Setor.as_view(), name='adicionarrangeipssetor'),
+    path('listaequisetor/', views.listadeequipamentossetor, name='listaequisetor')
 ]
