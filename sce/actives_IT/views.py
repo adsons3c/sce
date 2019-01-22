@@ -171,10 +171,17 @@ class Create_Range_Setor(CreateView):
 
 
 
+# def listadeequipamentossetor(request):
+#
+#     form = GetSetorForm()
+#     return render(request, 'actives_IT/form.html', {'form', form})
+
+
 def listadeequipamentossetor(request):
 
-    form = GetSetorForm()
-    return render(request, 'actives_IT/form.html', {'form', form})
+    setores = Setor.objects.all()
+    return render (request, 'actives_IT/listasetores.html', locals())
+
 
 
 
@@ -186,4 +193,4 @@ def listadeequipamentossetor(request):
 #     I = Impressora.objects.filter(setor = setor)
 #     RW = Roteador_Wifi.objects.filter(setor = setor)
 #
-#     return render (request, 'actives_IT/listasetores.html', locals() )
+    # return render (request, 'actives_IT/listasetores.html', locals() )
