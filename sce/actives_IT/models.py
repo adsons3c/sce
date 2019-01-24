@@ -152,4 +152,6 @@ class Range_Ips_Setor(models.Model):
     setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
     ip_inicial = models.GenericIPAddressField(unique=True)
     ip_final = models.GenericIPAddressField(unique=True)
-    ips = models.BooleanField(null=True)
+
+    def __str__(self):
+        return  str(self.setor)

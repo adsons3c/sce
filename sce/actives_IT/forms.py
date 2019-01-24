@@ -2,7 +2,5 @@ from django import forms
 from .models import *
 
 
-class GetSetorForm(forms.ModelForm):
-    class Meta:
-        model = Setor
-        fields = ["sigla"]
+class GetSetorForm(forms.Form):
+    sigla = forms.ModelChoiceField(Setor.objects.order_by("sigla"))

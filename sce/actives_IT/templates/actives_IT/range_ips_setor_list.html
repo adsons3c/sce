@@ -1,0 +1,3 @@
+{% for range in object_list %}
+    <p><a href="{% url 'detalhesrangeips' range.pk %}">{{ range }}</a></p>
+{% endfor %}

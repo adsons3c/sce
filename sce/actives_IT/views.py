@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.db import IntegrityError
 from .forms import GetSetorForm
+import ipaddress
 
 
 class Home(TemplateView):
@@ -61,7 +62,7 @@ class Create_Rotetador_Wifi(CreateView):
 class Create_Setor(CreateView):
     model = Setor
     template_name = 'actives_IT/setor_form.html'
-    fields = ['nome', 'sigla', 'range_inicial', 'range_final']
+    fields = ['nome', 'sigla']
 
     def form_valid(self,form):
         try:
@@ -89,6 +90,19 @@ class Create_Switch(CreateView):
     template_name = 'actives_IT/switch_form.html'
     fields = ['modelo', 'numero_serie', 'ip', 'senha_admin', 'data_ultima_manutencao',
               'data_proxima_manutencao', 'descricao_manutencao', 'setor', 'status']
+
+    def form_valid(self,form):
+        try:
+            form.save()
+            return render(self.request, 'actives_IT/home.html')
+        except IntegrityError:
+            return HttpResponse("Duplicado")
+
+
+class Create_Range_Setor(CreateView):
+    model = Range_Ips_Setor
+    template_name = 'actives_IT/Range_Ips_Setor_form.html'
+    fields = ['setor', 'ip_inicial', 'ip_final']
 
     def form_valid(self,form):
         try:
@@ -135,6 +149,10 @@ class Switch_List(ListView):
     template_name = 'actives_IT/switch_list.html'
     paginate_by = 20
 
+class Range_Ips_Setor_List(ListView):
+    model = Range_Ips_Setor
+    template_name = 'actives_IT/range_ips_setor_list.html'
+
 
 '''Definição das Class DetailView'''
 
@@ -156,41 +174,30 @@ class Impressora_Detail(DetailView):
 class Switch_Detail(DetailView):
     model = Switch
 
-
-class Create_Range_Setor(CreateView):
+class Range_Ips_Setor_Detail(DetailView):
     model = Range_Ips_Setor
-    template_name = 'actives_IT/Range_Ips_Setor_form.html'
-    fields = ['setor', 'ip_inicial', 'ip_final']
 
-    def form_valid(self,form):
-        try:
-            form.save()
-            return render(self.request, 'actives_IT/home.html')
-        except IntegrityError:
-            return HttpResponse("Duplicado")
+    def get_context_data(self, **kwargs):
+        context = super(Range_Ips_Setor_Detail, self).get_context_data(**kwargs)
 
+        return context
+
+    # print(start_ip)
+    # for ip in ipaddress.IPv4IPv4Network()
 
 
-# def listadeequipamentossetor(request):
-#
-#     form = GetSetorForm()
-#     return render(request, 'actives_IT/form.html', {'form', form})
+'''Função para listar dos os Equipamentos por Setor'''
+def listaequip(request):
+
+    form = GetSetorForm()
+    if request.method == "POST":
+        form = GetSetorForm(request.POST)
+        if form.is_valid():
+            formulario = form.cleaned_data["sigla"]
+            C = Computadores.objects.filter(setor__sigla = formulario.sigla)
+            I = Impressora.objects.filter(setor__sigla = formulario.sigla)
+            RW = Roteador_Wifi.objects.filter(setor__sigla = formulario.sigla)
+            SW = Switch.objects.filter(setor__sigla = formulario.sigla)
 
 
-def listadeequipamentossetor(request):
-
-    setores = Setor.objects.all()
-    return render (request, 'actives_IT/listasetores.html', locals())
-
-
-
-
-# def listaequip(request, pk):
-#
-#     setor = get_object_or_404(Setor, pk=pk)
-#
-#     C = Computadores.objects.filter(setor = setor)
-#     I = Impressora.objects.filter(setor = setor)
-#     RW = Roteador_Wifi.objects.filter(setor = setor)
-#
-    # return render (request, 'actives_IT/listasetores.html', locals() )
+    return render (request, 'actives_IT/listasetores.html', locals() )

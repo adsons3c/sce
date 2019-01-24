@@ -1,18 +1,31 @@
+{% extends 'actives_IT/base.html' %}
 <!DOCTYPE html>
 <html>
 <body>
-<h2>Lista de Todos os Equipamentos Em Cada Setor</h2>
+{% block content %}
+<h2>Lista de Equipamentos Em Cada Setor</h2>
 <p>Selecione o Setor Desejado</p>
-
-<form action={% url 'detalhesswitch' setor.pk %} method="POST">
-  <select name="setor">
-    {% for setor in setores %}
-    <option>{{setor}}</option>
-    {% endfor %}
-  </select>
-  <br><br>
-  <input type="submit">
+<form  method="POST">
+  {% csrf_token %}
+  {{ form }}
+  <button type="submit">enviar</button>
 </form>
-
+<p>Computadores</p>
+{% for pc in C %}
+  <p>{{ pc.modelo }} <br></p>
+{% endfor%}
+<P>Impressoras</p>
+{% for imp in I %}
+  <p>{{ imp.modelo }}
+{% endfor %}
+<p>Roteador WIFI </P>
+{% for rw in RW %}
+  <p>{{ rw.modelo }}
+{% endfor %}
+<p>Switch</p>
+{% for s in SW %}
+  <p>{{ s.modelo }}
+{% endfor %}
+{% endblock %}
 </body>
 </html>
