@@ -25,5 +25,7 @@ urlpatterns = [
     path('detalhesswitch/<int:pk>/', Switch_Detail.as_view(), name='detalhesswitch'),
     path('detalhesrangeips/<int:pk>/', Range_Ips_Setor_Detail.as_view(), name='detalhesrangeips'),
     path('adicionarrangeipssetor/', Create_Range_Setor.as_view(), name='adicionarrangeipssetor'),
-    path('listaequisetor/', views.listaequip, name='listaequisetor')
+    path('listaequisetor/', views.listaequip, name='listaequisetor'),
+    path('listaipsativos/', views.listaipsativos, name='listaipsativos'),
+
 ]

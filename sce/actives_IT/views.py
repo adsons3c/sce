@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.db import IntegrityError
 from .forms import GetSetorForm
-import ipaddress
+
 
 
 class Home(TemplateView):
@@ -18,9 +18,9 @@ class Home(TemplateView):
 class CreatePC(CreateView):
     model = Computadores
     template_name = 'actives_IT/computadores_form.html'
-    fields = ['setor', 'modelo','tombamento', 'numero_serie', 'sistema_oper', 'licenca_so', 'ip',
+    fields = ['tombamento', 'numero_serie', 'sistema_oper', 'licenca_so', 'ip',
               'mac', 'processador', 'memoria', 'hd', 'data_ultima_manutencao',
-              'data_proxima_manutencao', 'descricao_manutencao', 'status',]
+              'data_proxima_manutencao', 'descricao_manutencao','setor','modelo','status',]
 
     def form_valid(self,form):
         try:
@@ -88,7 +88,7 @@ class Create_Impressora(CreateView):
 class Create_Switch(CreateView):
     model = Switch
     template_name = 'actives_IT/switch_form.html'
-    fields = ['modelo', 'numero_serie', 'ip', 'senha_admin', 'data_ultima_manutencao',
+    fields = ['modelo','tombamento','numero_serie', 'ip', 'senha_admin', 'data_ultima_manutencao',
               'data_proxima_manutencao', 'descricao_manutencao', 'setor', 'status']
 
     def form_valid(self,form):
@@ -176,14 +176,17 @@ class Switch_Detail(DetailView):
 
 class Range_Ips_Setor_Detail(DetailView):
     model = Range_Ips_Setor
+    template_name='actives_IT/range_ips_setor_detail.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(Range_Ips_Setor_Detail, self).get_context_data(**kwargs)
 
-        return context
+'''Lista de IPs Ativos'''
+def listaipsativos(request):
+    ipspc = Computadores.objects.all()
+    ipsimp = Impressora.objects.all()
+    ipsroute = Roteador_Wifi.objects.all()
+    ipssw = Switch.objects.all()
 
-    # print(start_ip)
-    # for ip in ipaddress.IPv4IPv4Network()
+    return render (request, 'actives_IT/listaipsativos.html', locals())
 
 
 '''Função para listar dos os Equipamentos por Setor'''
@@ -200,4 +203,4 @@ def listaequip(request):
             SW = Switch.objects.filter(setor__sigla = formulario.sigla)
 
 
-    return render (request, 'actives_IT/listasetores.html', locals() )
+    return render (request, 'actives_IT/listasetores.html', locals())

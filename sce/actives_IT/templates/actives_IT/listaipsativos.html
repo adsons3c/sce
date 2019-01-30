@@ -1,0 +1,26 @@
+{% extends 'actives_IT/base.html' %}
+<!DOCTYPE html>
+<html>
+<body>
+{% block content %}
+<h2>Lista de IPs Ativos</h2>
+
+<h3>Computadores</h3>
+{% for ip in ipspc %}
+     <p><a href="{% url 'detalhespc' ip.pk %}">{{ ip.ip }}</a></p>
+{% endfor %}
+<h3>Impressoras</h3>
+{% for ip in ipsimp %}
+     <p><a href="{% url 'detalhesimpressora' ip.pk %}">{{ ip.ip }}</a></p>
+{% endfor %}
+<h3>Roteadores</h3>
+{% for ip in ipsroute %}
+     <p><a href="{% url 'detalhesroteadorwifi' ip.pk %}">{{ ip.ip }}</a></p>
+{% endfor %}
+<h3>Switchs</h3>
+{% for ip in ipssw %}
+     <p><a href="{% url 'detalhesswitch' ip.pk %}">{{ ip.ip }}</a></p>
+{% endfor %}
+{% endblock %}
+</body>
+</html>

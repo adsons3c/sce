@@ -129,6 +129,7 @@ class Impressora(models.Model):
 '''Modelo do Switch'''
 class Switch(models.Model):
     modelo = models.CharField(max_length=100)
+    tombamento = models.IntegerField(unique=True)
     numero_serie = models.CharField(max_length=100, unique=True)
     ip = models.GenericIPAddressField(unique=True)
     senha_admin = models.CharField(max_length=50)

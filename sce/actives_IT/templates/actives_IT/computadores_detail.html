@@ -1,3 +1,8 @@
+{% extends 'actives_IT/base.html' %}
+<!DOCTYPE html>
+<html>
+<body>
+{% block content %}
 <h2>Detalhes do Computador</h2>
 <p>Tombamento: {{ object.tombamento }}</p>
 <p>Numero de Série: {{ object.numero_serie }}</p>
@@ -14,3 +19,6 @@
 <p>Status: {{ object.status }}</p>
 <p>Setor: {{ object.setor }}</p>
 <p>Modelo: {{ object.modelo }}</p>
+{% endblock %}
+</body>
+</html>
