@@ -181,17 +181,22 @@ class Range_Ips_Setor_Detail(DetailView):
 
 '''Lista de IPs Ativos'''
 def listaipsativos(request):
-    ipspc = Computadores.objects.all()
-    ipsimp = Impressora.objects.all()
-    ipsroute = Roteador_Wifi.objects.all()
-    ipssw = Switch.objects.all()
+    form = GetSetorForm()
+    if request.method == "POST":
+        form = GetSetorForm(request.POST)
+        if form.is_valid():
+            formulario = form.cleaned_data["sigla"]
+            ipspc = Computadores.objects.filter(setor__sigla = formulario.sigla)
+            ipsimp = Impressora.objects.filter(setor__sigla = formulario.sigla)
+            ipsroute = Roteador_Wifi.objects.filter(setor__sigla = formulario.sigla)
+            ipssw = Switch.objects.filter(setor__sigla = formulario.sigla)
+            rangeips = Range_Ips_Setor.objects.filter(setor__sigla = formulario.sigla)
 
     return render (request, 'actives_IT/listaipsativos.html', locals())
 
 
 '''Função para listar dos os Equipamentos por Setor'''
 def listaequip(request):
-
     form = GetSetorForm()
     if request.method == "POST":
         form = GetSetorForm(request.POST)
@@ -201,6 +206,5 @@ def listaequip(request):
             I = Impressora.objects.filter(setor__sigla = formulario.sigla)
             RW = Roteador_Wifi.objects.filter(setor__sigla = formulario.sigla)
             SW = Switch.objects.filter(setor__sigla = formulario.sigla)
-
 
     return render (request, 'actives_IT/listasetores.html', locals())

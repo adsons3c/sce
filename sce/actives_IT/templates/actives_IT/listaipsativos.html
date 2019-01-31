@@ -4,7 +4,11 @@
 <body>
 {% block content %}
 <h2>Lista de IPs Ativos</h2>
-
+<form  method="POST">
+  {% csrf_token %}
+  {{ form }}
+  <button type="submit">enviar</button>
+</form>
 <h3>Computadores</h3>
 {% for ip in ipspc %}
      <p><a href="{% url 'detalhespc' ip.pk %}">{{ ip.ip }}</a></p>
@@ -20,6 +24,11 @@
 <h3>Switchs</h3>
 {% for ip in ipssw %}
      <p><a href="{% url 'detalhesswitch' ip.pk %}">{{ ip.ip }}</a></p>
+{% endfor %}
+<h3>Range de IPs</h3>
+{% for lista in rangeips %}
+     <p>IP Inicial: {{ lista.ip_inicial }}</p>
+     <p>IP Final: {{ lista.ip_final }}</p>
 {% endfor %}
 {% endblock %}
 </body>
