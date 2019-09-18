@@ -1,4 +1,14 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
+class Manutencao(models.Model):
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+    texto = models.TextField(blank=True)
+
+
 
 '''Modelo de Setor'''
 class Setor(models.Model):
@@ -147,12 +157,3 @@ class Switch(models.Model):
 
     def __str__(self):
         return self.modelo
-
-'''Range de IPs '''
-class Range_Ips_Setor(models.Model):
-    setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
-    ip_inicial = models.GenericIPAddressField(unique=True)
-    ip_final = models.GenericIPAddressField(unique=True)
-
-    def __str__(self):
-        return  str(self.setor)

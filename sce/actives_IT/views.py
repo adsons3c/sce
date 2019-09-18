@@ -4,7 +4,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Setor, Modelos_PC, Computadores, Roteador_Wifi, Impressora
-from .models import Switch, Range_Ips_Setor
+from .models import Switch
 from django.contrib import messages
 from django.http import HttpResponse
 from django.db import IntegrityError
@@ -99,19 +99,6 @@ class Create_Switch(CreateView):
             return HttpResponse("Duplicado")
 
 
-class Create_Range_Setor(CreateView):
-    model = Range_Ips_Setor
-    template_name = 'actives_IT/Range_Ips_Setor_form.html'
-    fields = ['setor', 'ip_inicial', 'ip_final']
-
-    def form_valid(self,form):
-        try:
-            form.save()
-            return render(self.request, 'actives_IT/home.html')
-        except IntegrityError:
-            return HttpResponse("Duplicado")
-
-
 '''Definição das class ListView'''
 
 class PC_List(ListView):
@@ -149,9 +136,6 @@ class Switch_List(ListView):
     template_name = 'actives_IT/switch_list.html'
     paginate_by = 20
 
-class Range_Ips_Setor_List(ListView):
-    model = Range_Ips_Setor
-    template_name = 'actives_IT/range_ips_setor_list.html'
 
 
 '''Definição das Class DetailView'''
@@ -173,10 +157,6 @@ class Impressora_Detail(DetailView):
 
 class Switch_Detail(DetailView):
     model = Switch
-
-class Range_Ips_Setor_Detail(DetailView):
-    model = Range_Ips_Setor
-    template_name='actives_IT/range_ips_setor_detail.html'
 
 
 '''Lista de IPs Ativos'''
